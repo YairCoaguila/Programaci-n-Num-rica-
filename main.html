@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio – Programación Numérica</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animación suave al aparecer */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans tracking-wide">
+
+  <!-- Encabezado -->
+  <header class="p-8 text-center border-b border-gray-800 fade-in">
+    <h1 class="text-4xl font-extrabold text-blue-400">Portafolio – Programación Numérica</h1>
+    <p class="text-gray-400 mt-2">Universidad Nacional del Altiplano – Puno | Semestre 2025</p>
+    <div class="flex justify-center gap-4 mt-4 text-sm flex-wrap">
+      <span class="bg-gray-800 px-3 py-1 rounded-full">👨‍🎓 Estudiante: Tu Nombre</span>
+      <span class="bg-gray-800 px-3 py-1 rounded-full">👩‍🏫 Docente: Nombre Docente</span>
+      <span class="bg-gray-800 px-3 py-1 rounded-full">📌 Sección: PN-01</span>
+    </div>
+  </header>
+
+  <!-- Sobre el portafolio -->
+  <section class="p-10 max-w-5xl mx-auto text-center fade-in">
+    <h2 class="text-2xl font-bold mb-3 text-blue-300">Sobre este portafolio</h2>
+    <p class="text-gray-400 leading-relaxed">
+      Este portafolio documenta mis actividades, tareas y proyectos del curso de 
+      <b>Programación Numérica</b>. Incluye resúmenes, código fuente, informes y reflexiones.
+    </p>
+    <div class="flex justify-center gap-3 mt-5 flex-wrap">
+      <span class="bg-gray-800 px-3 py-1 rounded-full">2025-I</span>
+      <span class="bg-gray-800 px-3 py-1 rounded-full">Métodos Numéricos</span>
+      <span class="bg-gray-800 px-3 py-1 rounded-full">C/C++</span>
+      <span class="bg-gray-800 px-3 py-1 rounded-full">Python</span>
+      <span class="bg-gray-800 px-3 py-1 rounded-full">Excel</span>
+    </div>
+  </section>
+
+  <!-- Estadísticas -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-6 mb-16 fade-in">
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+      <h3 class="text-3xl font-bold text-blue-400">3</h3>
+      <p class="text-gray-300">Actividades registradas</p>
+    </div>
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+      <h3 class="text-3xl font-bold text-green-400">100%</h3>
+      <p class="text-gray-300">Entregables propios</p>
+    </div>
+    <div class="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+      <h3 class="text-3xl font-bold text-purple-400">FINESI</h3>
+      <p class="text-gray-300">UNA Puno</p>
+    </div>
+  </section>
+
+  <!-- Objetivos del curso -->
+  <section class="max-w-5xl mx-auto px-6 mb-16 fade-in">
+    <h2 class="text-2xl font-bold text-center text-blue-300 mb-6">🎯 Objetivos del curso</h2>
+    <ul class="list-disc list-inside text-gray-400 space-y-2">
+      <li>Comprender los fundamentos de la aritmética de punto flotante.</li>
+      <li>Aplicar métodos numéricos para resolver problemas reales.</li>
+      <li>Implementar algoritmos en C++ y Python de forma eficiente.</li>
+      <li>Analizar la convergencia y estabilidad de métodos numéricos.</li>
+      <li>Desarrollar habilidades para reportar y documentar resultados.</li>
+    </ul>
+  </section>
+
+  <!-- Actividades -->
+  <section class="px-6 max-w-6xl mx-auto mb-16 fade-in">
+    <h2 class="text-2xl font-bold text-center text-blue-300 mb-8">📂 Actividades del curso</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+        <h3 class="text-lg font-semibold">Actividad 01 - Error y Aritmética</h3>
+        <p class="text-gray-400 text-sm mt-2">Ejercicios de redondeo, error absoluto/relativo y estabilidad numérica.</p>
+        <span class="block mt-3 text-xs text-gray-500">Fecha: 10/03/2025</span>
+        <a href="#" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver archivo</a>
+      </div>
+
+      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+        <h3 class="text-lg font-semibold">Actividad 02 - Métodos de Raíces</h3>
+        <p class="text-gray-400 text-sm mt-2">Comparación entre bisección y Newton-Raphson con gráficos de convergencia.</p>
+        <span class="block mt-3 text-xs text-gray-500">Fecha: 17/03/2025</span>
+        <a href="#" class="mt-4 inline-block bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition">💻 Código fuente</a>
+      </div>
+
+      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
+        <h3 class="text-lg font-semibold">Proyecto - Interpolación y Ajuste</h3>
+        <p class="text-gray-400 text-sm mt-2">Interpolación de Newton, spline cúbico y ajuste de datos experimentales.</p>
+        <span class="block mt-3 text-xs text-gray-500">Fecha: 07/04/2025</span>
+        <a href="#" class="mt-4 inline-block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition">📑 Informe final</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recursos -->
+  <section class="bg-gray-900 py-12 fade-in">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-2xl font-bold text-blue-300 mb-6">📘 Recursos adicionales</h2>
+      <p class="text-gray-400">Incluyen materiales de apoyo, referencias y enlaces de interés:</p>
+      <ul class="mt-4 space-y-2 text-gray-300">
+        <li>📂 Programa del curso y calendario</li>
+        <li>📝 Guías de laboratorio en PDF</li>
+        <li>🔗 Enlaces a bibliografía digital</li>
+        <li>📊 Plantillas de Excel para cálculos</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <footer class="bg-gray-950 py-8 text-center text-gray-400 border-t border-gray-800 fade-in">
+    <p>📧 Contacto: <a href="mailto:tuemail@ejemplo.com" class="text-blue-400 hover:underline">tuemail@ejemplo.com</a></p>
+    <p class="mt-2 text-sm">© 2025 - Portafolio académico de Programación Numérica</p>
+  </footer>
+
+  <!-- Script para animaciones al hacer scroll -->
+  <script>
+    const faders = document.querySelectorAll('.fade-in');
+    const options = { threshold: 0.2 };
+
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+</body>
+</html>
