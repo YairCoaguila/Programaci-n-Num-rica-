@@ -1,191 +1,525 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portafolio – Programación Numérica</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portafolio — Programación Numérica | Yair Dilan Quispe Coaguila</title>
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
   <style>
-    /* Animación suave al aparecer */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+    :root{
+      --bg-0: #0b1020;
+      --bg-1: #0f1724;
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --accent-start: #4f46e5;
+      --accent-end: #06b6d4;
+      --muted: #94a3b8;
     }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+
+    html,body{height:100%}
+    body{
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(79,70,229,0.08), transparent),
+                  radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.06), transparent),
+                  linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .container {
+      max-width:1200px;
+      margin-left:auto;
+      margin-right:auto;
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.5);
+    }
+
+    .accent-underline{
+      display:inline-block;
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      height:4px;
+      width:48px;
+      border-radius:4px;
+      margin-top:8px;
+    }
+
+    .card-hover:hover{ transform: translateY(-6px); transition: transform .28s cubic-bezier(.2,.8,.2,1); }
+
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.03);
+      color:var(--muted);
+    }
+
+    .timeline { position: relative; padding-left: 1.25rem; }
+    .timeline::before{ content:''; position:absolute; left: 8px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, var(--accent-start), var(--accent-end)); opacity:0.12; border-radius:2px; }
+
+    input:focus, textarea:focus { outline: none; box-shadow: 0 6px 24px rgba(79,70,229,0.12); border-color: rgba(79,70,229,0.5); }
+
+    @media (max-width: 860px){
+      .desktop-only{ display:none; }
+    }
+
+    .enter {
+      opacity:0;
+      transform: translateY(18px) scale(.995);
+      transition: all .6s cubic-bezier(.2,.9,.2,1);
+    }
+    .enter.visible { opacity:1; transform: translateY(0) scale(1); }
+
+    /* Visor modal */
+    #visor {
+      backdrop-filter: blur(10px);
+    }
+    #visor pre {
+      background: #0d1320;
+      color: #a8ffda;
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      max-height: 70vh;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
     }
   </style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans tracking-wide">
+<body class="min-h-screen">
 
-  <!-- Encabezado -->
-  <header class="p-8 text-center border-b border-gray-800 fade-in">
-    <h1 class="text-4xl font-extrabold text-blue-400">Portafolio – Programación Numérica</h1>
-    <p class="text-gray-400 mt-2">Universidad Nacional del Altiplano – Puno | Semestre 2025</p>
-    <div class="flex justify-center gap-4 mt-4 text-sm flex-wrap">
-      <span class="bg-gray-800 px-3 py-1 rounded-full">👨‍🎓 Estudiante: QUISPE COAGUILA YAIR DILAN</span>
-      <span class="bg-gray-800 px-3 py-1 rounded-full">👩‍🏫 Docente: TORRES CRUZ FRED</span>
-      <span class="bg-gray-800 px-3 py-1 rounded-full">📌 Sección: 4TO "A"</span>
+  <!-- NAVBAR -->
+  <header class="w-full backdrop-blur-sm sticky top-0 z-40">
+    <div class="container flex items-center justify-between py-4">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg" style="background:linear-gradient(135deg,var(--accent-start),var(--accent-end)); box-shadow:0 6px 18px rgba(6,182,212,0.12)"></div>
+          <div>
+            <div class="text-lg font-extrabold">Portafolio Numérico</div>
+            <div class="text-xs text-[--muted]" style="color:var(--muted)">UNA Puno • Semestre 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-4 bg-transparent px-3 py-2 rounded-md">
+          <a href="#sobre" class="text-sm text-gray-300 hover:text-white">Sobre</a>
+          <a href="#actividades" class="text-sm text-gray-300 hover:text-white">Actividades</a>
+          <a href="#recursos" class="text-sm text-gray-300 hover:text-white">Recursos</a>
+        </div>
+
+        <button id="themeBtn" aria-label="Cambiar tema" class="card p-2 rounded-md hover:brightness-105 transition">
+          <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Sobre el portafolio -->
-  <section class="p-10 max-w-5xl mx-auto text-center fade-in">
-    <h2 class="text-2xl font-bold mb-3 text-blue-300">Sobre este portafolio</h2>
-    <p class="text-gray-400 leading-relaxed">
-      Este portafolio documenta mis actividades, tareas y proyectos del curso de 
-      <b>Programación Numérica</b>. Incluye resúmenes, código fuente, informes y reflexiones.
-    </p>
-    <div class="flex justify-center gap-3 mt-5 flex-wrap">
-      <span class="bg-gray-800 px-3 py-1 rounded-full">2025-I</span>
-      <span class="bg-gray-800 px-3 py-1 rounded-full">Métodos Numéricos</span>
-      <span class="bg-gray-800 px-3 py-1 rounded-full">C/C++</span>
-      <span class="bg-gray-800 px-3 py-1 rounded-full">Python</span>
-      <span class="bg-gray-800 px-3 py-1 rounded-full">Excel</span>
-    </div>
-  </section>
+  <!-- MAIN -->
+  <main class="container grid grid-cols-12 gap-8 py-10">
 
-  <!-- Estadísticas -->
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-6 mb-16 fade-in">
-    <div class="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
-      <h3 class="text-3xl font-bold text-blue-400">8</h3>
-      <p class="text-gray-300">Actividades registradas</p>
-    </div>
-    <div class="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
-      <h3 class="text-3xl font-bold text-green-400">100%</h3>
-      <p class="text-gray-300">Entregables propios</p>
-    </div>
-    <div class="bg-gray-900 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
-      <h3 class="text-3xl font-bold text-purple-400">FINESI</h3>
-      <p class="text-gray-300">UNA Puno</p>
-    </div>
-  </section>
+    <!-- LEFT: profile / overview -->
+    <aside class="col-span-12 lg:col-span-3 flex flex-col gap-6">
+      <div class="card p-5 enter visible card-hover">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-xl" style="background:linear-gradient(135deg,var(--accent-end),var(--accent-start)); box-shadow: 0 8px 22px rgba(79,70,229,0.12)"></div>
+          <div>
+            <div class="text-lg font-bold">Yair Dilan Quispe Coaguila</div>
+            <div class="text-xs text-[--muted]">Estudiante — Programación Numérica</div>
+          </div>
+        </div>
 
-  <!-- Objetivos del curso -->
-  <section class="max-w-5xl mx-auto px-6 mb-16 fade-in">
-    <h2 class="text-2xl font-bold text-center text-blue-300 mb-6">🎯 Objetivos del curso</h2>
-    <ul class="list-disc list-inside text-gray-400 space-y-2">
-      <li>Comprender los fundamentos de la aritmética de punto flotante.</li>
-      <li>Aplicar métodos numéricos para resolver problemas reales.</li>
-      <li>Implementar algoritmos en C++ y Python de forma eficiente.</li>
-      <li>Analizar la convergencia y estabilidad de métodos numéricos.</li>
-      <li>Desarrollar habilidades para reportar y documentar resultados.</li>
-    </ul>
-  </section>
+        <div class="mt-4 text-sm text-gray-300">
+          <p>Universidad Nacional del Altiplano — Sección 4TO "A"</p>
+          <p class="mt-2 text-[--muted] text-xs">Contacto: <a href="mailto:yairquispecoaguila@gmail.com" class="text-cyan-300">yairquispecoaguila@gmail.com</a></p>
+        </div>
 
-  <!-- Actividades -->
-  <section class="px-6 max-w-6xl mx-auto mb-16 fade-in">
-    <h2 class="text-2xl font-bold text-center text-blue-300 mb-8">📂 Actividades del curso</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      
-      <!-- Tarea modificada -->
-      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <h3 class="text-lg font-semibold">Tarea 01 - Interpretación de Función</h3>
-        <p class="text-gray-400 text-sm mt-2">Código en Python para identificar variables y operaciones en una función matemática.</p>
-        <span class="block mt-3 text-xs text-gray-500">Fecha: 10/09/2025</span>
-        <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/Codigo%20Funcion.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
+        <div class="mt-4 flex gap-2 flex-wrap">
+          <span class="pill">2025-I</span>
+          <span class="pill">C/C++</span>
+          <span class="pill">Python</span>
+        </div>
       </div>
 
-      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <h3 class="text-lg font-semibold">Tarea 02 - Graficadora De Funciones</h3>
-        <p class="text-gray-400 text-sm mt-2">Código en Python para graficas funciones lineales.</p>
-        <span class="block mt-3 text-xs text-gray-500">Fecha: 23/09/2025</span>
-        <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/Graficadora%20Funciones.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
+      <div class="card p-5 enter card-hover">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs text-[--muted]">Actividades</div>
+            <div class="text-2xl font-extrabold text-white" id="totalActividades">8</div>
+          </div>
+          <div>
+            <div class="text-xs text-[--muted]">Entregables</div>
+            <div class="text-2xl font-extrabold text-green-400">100%</div>
+          </div>
+        </div>
+
+        <div class="mt-4 text-xs text-[--muted]">
+          Última actualización: <strong class="text-gray-200">10/10/2025</strong>
+        </div>
       </div>
-      
-      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <h3 class="text-lg font-semibold">Tarea 03 - Metodo Newton-Raphson</h3>
-        <p class="text-gray-400 text-sm mt-2">Código en Python para Resolucion del Metodo Newton-Raphson</p>
-        <span class="block mt-3 text-xs text-gray-500">Fecha: 23/09/2025</span>
-        <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/Metodo%20Newton-Raphson.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
+
+      <div class="card p-5 enter card-hover">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <div class="text-sm font-semibold">Línea de tiempo</div>
+            <div class="text-[--muted] text-xs">Actividades recientes</div>
+          </div>
+          <div class="text-xs pill">Ver todo</div>
+        </div>
+
+        <div class="timeline" id="timelineContainer">
+          <div class="mb-6 relative pl-6">
+            <div class="absolute left-0 top-1 w-3 h-3 rounded-full" style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); box-shadow:0 4px 14px rgba(79,70,229,0.12)"></div>
+            <div class="text-sm font-semibold">Cargando...</div>
+            <div class="text-xs text-[--muted] mt-1">Obteniendo tareas desde GitHub</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: main content -->
+    <section class="col-span-12 lg:col-span-9 flex flex-col gap-8">
+
+      <!-- Hero / Intro -->
+      <div class="card p-6 enter card-hover">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-extrabold">Portafolio — Programación Numérica</h2>
+            <div class="accent-underline"></div>
+            <p class="mt-3 text-[--muted]">Recopilación de tareas, proyectos y recursos del curso — UNA Puno, Semestre 2025</p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <input id="search" type="search" placeholder="Buscar actividades, métodos..." 
+                class="w-64 md:w-80 bg-transparent border border-transparent card p-3 rounded-md text-sm placeholder:text-[--muted]" />
+              <div class="absolute right-3 top-3 text-[--muted]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10.5 19a8.5 8.5 0 110-17 8.5 8.5 0 010 17z"/>
+                </svg>
+              </div>
+            </div>
+
+            <select id="filter" class="bg-transparent card p-3 rounded-md text-sm">
+              <option value="all">Filtrar: Todos</option>
+              <option value="py">Python</option>
+              <option value="pdf">PDF</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-  <h3 class="text-lg font-semibold">Tarea 04 - Método de Bisección</h3>
-  <p class="text-gray-400 text-sm mt-2">Código en Python para encontrar raíces mediante el método de Bisección.</p>
-  <span class="block mt-3 text-xs text-gray-500">Fecha: 10/10/2025</span>
-  <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/biseccion.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
-</div>
-
-<div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-  <h3 class="text-lg font-semibold">Tarea 05 - Método de Punto Fijo</h3>
-  <p class="text-gray-400 text-sm mt-2">Código en Python para resolver ecuaciones mediante el método del Punto Fijo.</p>
-  <span class="block mt-3 text-xs text-gray-500">Fecha: 10/10/2025</span>
-  <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/punto_fijo.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
-</div>
-
-<div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-  <h3 class="text-lg font-semibold">Tarea 06 - Método de Regula Falsi</h3>
-  <p class="text-gray-400 text-sm mt-2">Código en Python para encontrar raíces mediante el método de Regula Falsi o Falsa Posición.</p>
-  <span class="block mt-3 text-xs text-gray-500">Fecha: 10/10/2025</span>
-  <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/regula_falsi.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
-</div>
-
-<div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-  <h3 class="text-lg font-semibold">Tarea 07 - Método de la Secante</h3>
-  <p class="text-gray-400 text-sm mt-2">Código en Python para resolver ecuaciones mediante el método de la Secante.</p>
-  <span class="block mt-3 text-xs text-gray-500">Fecha: 10/10/2025</span>
-  <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/secante.py" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
-</div>
-      
-<div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-  <h3 class="text-lg font-semibold">Trabajo en clase 01 - Desarrollo de Ejercicios - Restricciones y Sistemas de 
-Ecuaciones</h3>
-  <p class="text-gray-400 text-sm mt-2">Resoluciones de los ejercicios panteados mediante la aplicacion en python.</p>
-  <span class="block mt-3 text-xs text-gray-500">Fecha: 25/09/2025</span>
-  <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/blob/main/Actividad_de_Clase___Ejercicios_25_09_27%20Dilan.pdf" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">📎 Ver código en GitHub</a>
-</div>
-
-      
-
-      <div class="bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <h3 class="text-lg font-semibold">Proyecto - En Mantenimiento</h3>
-        <p class="text-gray-400 text-sm mt-2">PROXIMAMENTE :3 .</p>
-        <span class="block mt-3 text-xs text-gray-500">Fecha: 07/09/2025</span>
-        <a href="#" class="mt-4 inline-block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition">📑 Informe final</a>
+      <!-- Activities grid -->
+      <div id="activitiesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card p-5 text-center">
+          <div class="text-[--muted]">Cargando actividades desde GitHub...</div>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Recursos -->
-  <section class="bg-gray-900 py-12 fade-in">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 class="text-2xl font-bold text-blue-300 mb-6">📘 Recursos adicionales</h2>
-      <p class="text-gray-400">Incluyen materiales de apoyo, referencias y enlaces de interés:</p>
-      <ul class="mt-4 space-y-2 text-gray-300">
-        <li>📂 Programa del curso y calendario</li>
-        <li>📝 Guías de laboratorio en PDF</li>
-        <li>🔗 Enlaces a bibliografía digital</li>
-        <li>📊 Plantillas de Excel para cálculos</li>
-      </ul>
-    </div>
-  </section>
+      <!-- resources & actions -->
+      <div class="flex flex-col md:flex-row gap-6">
+        <div class="flex-1 card p-5 enter card-hover">
+          <h4 class="font-semibold">Recursos y materiales</h4>
+          <div class="accent-underline"></div>
+          <ul class="mt-4 text-sm text-[--muted] space-y-2">
+            <li>📂 Programa del curso y cronograma</li>
+            <li>📝 Guías de laboratorio (PDF)</li>
+            <li>🔗 Bibliografía digital (enlaces)</li>
+            <li>📊 Plantillas de Excel para análisis numérico</li>
+          </ul>
+        </div>
 
-  <!-- Contacto -->
-  <footer class="bg-gray-950 py-8 text-center text-gray-400 border-t border-gray-800 fade-in">
-    <p>📧 Contacto: <a href="mailto:tuemail@ejemplo.com" class="text-blue-400 hover:underline">tuemail@ejemplo.com</a></p>
-    <p class="mt-2 text-sm">© 2025 - Portafolio académico de Programación Numérica</p>
+        <div class="w-full md:w-64 card p-5 enter card-hover">
+          <div class="text-sm text-[--muted]">Acciones rápidas</div>
+          <div class="mt-4 flex flex-col gap-3">
+            <a href="#" class="inline-block text-sm font-semibold px-3 py-2 rounded-md text-center" style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end));">Descargar PDF</a>
+            <a href="https://github.com/YairCoaguila/Programaci-n-Num-rica-/" target="_blank" class="inline-block text-sm font-semibold px-3 py-2 rounded-md text-center border border-white/6">Repositorio GitHub</a>
+            <a href="#contact" class="inline-block text-sm font-semibold px-3 py-2 rounded-md text-center" style="background:linear-gradient(90deg,var(--accent-end),var(--accent-start));">Contacto</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- contact / footer area -->
+      <div id="contact" class="card p-6 enter card-hover">
+        <h4 class="font-semibold">Contacto</h4>
+        <div class="text-[--muted] text-sm mt-2">Envíame un correo si quieres feedback o colaboración en el proyecto.</div>
+
+        <form id="contactForm" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input placeholder="Nombre" required class="p-3 rounded-md bg-transparent border border-white/6 text-sm" />
+          <input placeholder="Correo" type="email" required class="p-3 rounded-md bg-transparent border border-white/6 text-sm" />
+          <textarea placeholder="Mensaje" required class="md:col-span-2 p-3 rounded-md bg-transparent border border-white/6 text-sm h-28"></textarea>
+          <button type="submit" class="md:col-span-2 inline-flex items-center justify-center gap-2 p-3 rounded-md text-sm font-semibold" style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end));">
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="container text-center py-8 text-xs text-[--muted]">
+    © 2025 — Portafolio Académico de Programación Numérica • Universidad Nacional del Altiplano — UNA Puno
   </footer>
 
-  <!-- Script para animaciones al hacer scroll -->
-  <script>
-    const faders = document.querySelectorAll('.fade-in');
-    const options = { threshold: 0.2 };
+  <!-- VISOR MODAL -->
+  <section id="visor" class="hidden fixed inset-0 bg-black/90 flex flex-col items-center justify-center z-50">
+    <div class="card w-[90%] h-[90%] p-6 relative">
+      <button onclick="cerrarVisor()" class="absolute top-4 right-6 text-white text-3xl font-bold hover:text-red-500 transition">×</button>
+      <h2 id="visorTitulo" class="text-xl font-semibold mb-4 pr-12"></h2>
+      <div id="visorContenido" class="w-full h-[85%] overflow-auto rounded-lg"></div>
+    </div>
+  </section>
 
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+  <!-- SCRIPTS -->
+  <script>
+    // Datos de tareas desde GitHub
+    const tareas = [
+      {
+        titulo: "Tarea 01 - Interpretación de Función",
+        descripcion: "Código en Python para identificar variables y operaciones en una función matemática.",
+        fecha: "10/09/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Codigo%20Funcion.py"
+      },
+      {
+        titulo: "Tarea 02 - Graficadora De Funciones",
+        descripcion: "Código en Python para graficar funciones lineales.",
+        fecha: "23/09/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Graficadora%20Funciones.py"
+      },
+      {
+        titulo: "Tarea 03 - Método Newton-Raphson",
+        descripcion: "Código en Python para resolver el método de Newton-Raphson.",
+        fecha: "23/09/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Metodo%20Newton-Raphson.py"
+      },
+      {
+        titulo: "Tarea 04 - Método de Bisección",
+        descripcion: "Código en Python para encontrar raíces mediante el método de Bisección.",
+        fecha: "10/10/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/biseccion.py"
+      },
+      {
+        titulo: "Tarea 05 - Método de Punto Fijo",
+        descripcion: "Código en Python para resolver ecuaciones mediante el método del Punto Fijo.",
+        fecha: "10/10/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/punto_fijo.py"
+      },
+      {
+        titulo: "Tarea 06 - Método de Regula Falsi",
+        descripcion: "Código en Python para el método de Regula Falsi o Falsa Posición.",
+        fecha: "10/10/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/regula_falsi.py"
+      },
+      {
+        titulo: "Tarea 07 - Método de la Secante",
+        descripcion: "Código en Python para resolver ecuaciones mediante el método de la Secante.",
+        fecha: "10/10/2025",
+        tipo: "py",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/secante.py"
+      },
+      {
+        titulo: "Trabajo en Clase 01 - Desarrollo de Ejercicios",
+        descripcion: "Resolución de ejercicios mediante Python.",
+        fecha: "25/09/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Actividad_de_Clase___Ejercicios_25_09_27%20Dilan.pdf"
+      }
+    ];
+
+    // Cargar tareas dinámicamente
+    const grid = document.getElementById('activitiesGrid');
+    const totalActividades = document.getElementById('totalActividades');
+    const timelineContainer = document.getElementById('timelineContainer');
+
+    function cargarTareas() {
+      grid.innerHTML = '';
+      totalActividades.textContent = tareas.length;
+
+      tareas.forEach((t, i) => {
+        const article = document.createElement('article');
+        article.className = 'card p-5 enter card-hover';
+        article.setAttribute('data-type', t.tipo);
+        
+        const tipoBadge = t.tipo === 'py' ? 'Python' : 'PDF';
+        const estado = i < 7 ? '<span class="text-green-400 font-semibold">Completa</span>' : '<span class="text-yellow-400 font-semibold">Revisar</span>';
+        
+        article.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-semibold">${t.titulo}</h3>
+              <div class="text-xs text-[--muted] mt-1">${t.fecha} • ${tipoBadge}</div>
+            </div>
+            <div class="pill">${tipoBadge}</div>
+          </div>
+
+          <p class="mt-3 text-sm text-gray-300">${t.descripcion}</p>
+
+          <div class="mt-4 flex items-center justify-between">
+            <button onclick="abrirVisor(${i})" class="text-sm font-semibold px-3 py-2 rounded-md inline-flex items-center gap-2" style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end));">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              Ver archivo
+            </button>
+            <div class="text-xs text-[--muted]">Estado: ${estado}</div>
+          </div>
+        `;
+        
+        grid.appendChild(article);
+        setTimeout(() => article.classList.add('visible'), 80 * i);
+      });
+
+      // Actualizar timeline con últimas 3 tareas
+      timelineContainer.innerHTML = '';
+      tareas.slice(-3).reverse().forEach((t, i) => {
+        const div = document.createElement('div');
+        div.className = 'mb-6 relative pl-6';
+        const color = i === 0 ? 'background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); box-shadow:0 4px 14px rgba(79,70,229,0.12)' : 
+                     i === 1 ? 'background: rgba(6,182,212,0.8)' : 'background: rgba(34,197,94,0.8)';
+        div.innerHTML = `
+          <div class="absolute left-0 top-1 w-3 h-3 rounded-full" style="${color}"></div>
+          <div class="text-sm font-semibold">${t.titulo}</div>
+          <div class="text-xs text-[--muted] mt-1">${t.fecha} • ${t.tipo.toUpperCase()}</div>
+        `;
+        timelineContainer.appendChild(div);
+      });
+    }
+
+    // Visor de archivos
+    const visor = document.getElementById('visor');
+    const visorTitulo = document.getElementById('visorTitulo');
+    const visorContenido = document.getElementById('visorContenido');
+
+    async function abrirVisor(i) {
+      const t = tareas[i];
+      visorTitulo.textContent = t.titulo;
+      visorContenido.innerHTML = '';
+
+      if (t.tipo === 'pdf') {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://docs.google.com/gview?url=' + encodeURIComponent(t.archivo) + '&embedded=true';
+        iframe.className = 'w-full h-full rounded-lg';
+        visorContenido.appendChild(iframe);
+      } else if (t.tipo === 'py') {
+        const pre = document.createElement('pre');
+        pre.textContent = 'Cargando código...';
+        visorContenido.appendChild(pre);
+        try {
+          const res = await fetch(t.archivo);
+          const txt = await res.text();
+          pre.textContent = txt;
+        } catch {
+          pre.textContent = '⚠️ No se pudo cargar el archivo.';
+        }
+      }
+
+      visor.classList.remove('hidden');
+    }
+
+    function cerrarVisor() {
+      visor.classList.add('hidden');
+      visorContenido.innerHTML = '';
+    }
+
+    // Entrada animada
+    document.querySelectorAll('.enter').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 80 * i);
+    });
+
+    // THEME TOGGLE
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    let dark = true;
+
+    themeBtn.addEventListener('click', () => {
+      dark = !dark;
+      if(!dark){
+        document.body.style.background = "linear-gradient(180deg,#f7fbff,#eef6ff)";
+        document.body.style.color = "#0b1220";
+        document.querySelectorAll('.card').forEach(c => {
+          c.style.background = "linear-gradient(180deg, rgba(250,250,250,0.9), rgba(250,250,250,0.88))";
+          c.style.border = "1px solid rgba(2,6,23,0.04)";
+          c.style.color = "#0b1220";
+        });
+        themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8-9h1M3 12H2m15.364-6.364l.707.707M6.343 17.657l-.707.707M17.657 17.657l.707-.707M6.343 6.343l-.707-.707" />';
+      } else {
+        document.body.style.background = "";
+        document.body.style.color = "";
+        document.querySelectorAll('.card').forEach(c => {
+          c.style.background = "";
+          c.style.border = "";
+          c.style.color = "";
+        });
+        themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />';
+      }
+    });
+
+    // SEARCH + FILTER
+    const search = document.getElementById('search');
+    const filter = document.getElementById('filter');
+    let items = [];
+
+    function applyFilters(){
+      const q = (search.value || '').toLowerCase().trim();
+      const f = filter.value;
+
+      items.forEach(it => {
+        const title = it.querySelector('h3').textContent.toLowerCase();
+        const txt = it.querySelector('p').textContent.toLowerCase();
+        const type = it.getAttribute('data-type') || 'all';
+
+        const matchesFilter = (f === 'all') ? true : (type === f);
+        const matchesQuery = (q === '') ? true : (title.includes(q) || txt.includes(q));
+
+        if(matchesFilter && matchesQuery){
+          it.style.display = '';
+          it.classList.add('visible');
+        } else {
+          it.style.display = 'none';
         }
       });
-    }, options);
+    }
 
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
+    search.addEventListener('input', applyFilters);
+    filter.addEventListener('change', applyFilters);
+
+    // Contact form
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Gracias — mensaje preparado. (Este formulario no envía sin backend.)');
+      e.target.reset();
     });
+
+    // Inicializar
+    cargarTareas();
+    items = Array.from(grid.querySelectorAll('article'));
   </script>
 </body>
 </html>
