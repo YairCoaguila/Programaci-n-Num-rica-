@@ -86,7 +86,6 @@
     }
     .enter.visible { opacity:1; transform: translateY(0) scale(1); }
 
-    /* Visor modal */
     #visor {
       backdrop-filter: blur(10px);
     }
@@ -164,7 +163,7 @@
         <div class="flex items-center justify-between">
           <div>
             <div class="text-xs text-[--muted]">Actividades</div>
-            <div class="text-2xl font-extrabold text-white" id="totalActividades">8</div>
+            <div class="text-2xl font-extrabold text-white" id="totalActividades">18</div>
           </div>
           <div>
             <div class="text-xs text-[--muted]">Entregables</div>
@@ -173,7 +172,7 @@
         </div>
 
         <div class="mt-4 text-xs text-[--muted]">
-          Última actualización: <strong class="text-gray-200">10/10/2025</strong>
+          Última actualización: <strong class="text-gray-200">24/12/2025</strong>
         </div>
       </div>
 
@@ -225,6 +224,18 @@
               <option value="pdf">PDF</option>
             </select>
           </div>
+        </div>
+      </div>
+
+      <!-- Unit Tabs -->
+      <div class="card p-4 enter">
+        <div class="flex gap-3">
+          <button id="unidad1Btn" onclick="cambiarUnidad(1)" class="px-6 py-3 rounded-md text-sm font-semibold transition-all" style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end));">
+            Unidad 1 - Métodos Numéricos
+          </button>
+          <button id="unidad2Btn" onclick="cambiarUnidad(2)" class="px-6 py-3 rounded-md text-sm font-semibold transition-all bg-transparent border border-white/10">
+            Unidad 2 - Aplicaciones Avanzadas
+          </button>
         </div>
       </div>
 
@@ -292,8 +303,7 @@
 
   <!-- SCRIPTS -->
   <script>
-    // Datos de tareas desde GitHub
-    const tareas = [
+    const tareasUnidad1 = [
       {
         titulo: "Tarea 01 - Interpretación de Función",
         descripcion: "Código en Python para identificar variables y operaciones en una función matemática.",
@@ -352,7 +362,81 @@
       }
     ];
 
-    // Cargar tareas dinámicamente
+    const tareasUnidad2 = [
+      {
+        titulo: "Semana N° 9 - Gradientes",
+        descripcion: "Código en R de comparación de gradientes.",
+        fecha: "15/11/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/1%20-%20CODIGO%20EN%20R%20DE%20COMPARACION.pdf"
+      },
+      {
+        titulo: "Semana N° 10 - Aplicaciones",
+        descripcion: "Ejercicios de aplicaciones numéricas.",
+        fecha: "22/11/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/Ejercicios.pdf"
+      },
+      {
+        titulo: "Semana N° 11 - Diferenciación Numérica",
+        descripcion: "Documento sobre diferenciación numérica.",
+        fecha: "29/11/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/diferenciacion_num.pdf"
+      },
+      {
+        titulo: "Semana N° 12 - Interpolación Numérica",
+        descripcion: "Interpolación Numérica y aplicaciones.",
+        fecha: "06/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/3%20-%20Interpolacion%20Num%C3%A9rica%20_y.pdf"
+      },
+      {
+        titulo: "Semana N° 13 - Aplicaciones (Supervivencia)",
+        descripcion: "Análisis de supervivencia con métodos numéricos.",
+        fecha: "13/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/Supervivencia.pdf"
+      },
+      {
+        titulo: "Semana N° 14 - Eigen Values",
+        descripcion: "Valores propios y aplicación YAPE.",
+        fecha: "20/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/YAPE.pdf"
+      },
+      {
+        titulo: "Semana N° 15 - Introducción a Markov",
+        descripcion: "Cadenas de Markov - Póster explicativo.",
+        fecha: "22/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/poster.pdf"
+      },
+      {
+        titulo: "Semana N° 16 - Books (Ejercicio 1)",
+        descripcion: "Ejercicio práctico 1.",
+        fecha: "24/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/Ejercicio_1_practica.pdf"
+      },
+      {
+        titulo: "Semana N° 16 - Books (Ejercicio 2)",
+        descripcion: "Ejercicio práctico 2.",
+        fecha: "24/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/ejercicio%202%20practi.pdf"
+      },
+      {
+        titulo: "Semana N° 16 - Books (Main)",
+        descripcion: "Documento principal de libros recomendados.",
+        fecha: "24/12/2025",
+        tipo: "pdf",
+        archivo: "https://raw.githubusercontent.com/YairCoaguila/Programaci-n-Num-rica-/main/Unidad%202/main.pdf"
+      }
+    ];
+
+    let unidadActual = 1;
+    let tareas = tareasUnidad1;
     const grid = document.getElementById('activitiesGrid');
     const totalActividades = document.getElementById('totalActividades');
     const timelineContainer = document.getElementById('timelineContainer');
@@ -367,7 +451,7 @@
         article.setAttribute('data-type', t.tipo);
         
         const tipoBadge = t.tipo === 'py' ? 'Python' : 'PDF';
-        const estado = i < 7 ? '<span class="text-green-400 font-semibold">Completa</span>' : '<span class="text-yellow-400 font-semibold">Revisar</span>';
+        const estado = '<span class="text-green-400 font-semibold">Completa</span>';
         
         article.innerHTML = `
           <div class="flex items-start justify-between gap-3">
@@ -377,9 +461,7 @@
             </div>
             <div class="pill">${tipoBadge}</div>
           </div>
-
           <p class="mt-3 text-sm text-gray-300">${t.descripcion}</p>
-
           <div class="mt-4 flex items-center justify-between">
             <button onclick="abrirVisor(${i})" class="text-sm font-semibold px-3 py-2 rounded-md inline-flex items-center gap-2" style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end));">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.5">
@@ -396,9 +478,9 @@
         setTimeout(() => article.classList.add('visible'), 80 * i);
       });
 
-      // Actualizar timeline con últimas 3 tareas
       timelineContainer.innerHTML = '';
-      tareas.slice(-3).reverse().forEach((t, i) => {
+      const ultimasTareas = [...tareasUnidad1, ...tareasUnidad2].slice(-3).reverse();
+      ultimasTareas.forEach((t, i) => {
         const div = document.createElement('div');
         div.className = 'mb-6 relative pl-6';
         const color = i === 0 ? 'background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); box-shadow:0 4px 14px rgba(79,70,229,0.12)' : 
@@ -412,7 +494,29 @@
       });
     }
 
-    // Visor de archivos
+    function cambiarUnidad(unidad) {
+      unidadActual = unidad;
+      tareas = unidad === 1 ? tareasUnidad1 : tareasUnidad2;
+      
+      const btn1 = document.getElementById('unidad1Btn');
+      const btn2 = document.getElementById('unidad2Btn');
+      
+      if(unidad === 1) {
+        btn1.style.background = 'linear-gradient(90deg,var(--accent-start),var(--accent-end))';
+        btn1.style.border = 'none';
+        btn2.style.background = 'transparent';
+        btn2.style.border = '1px solid rgba(255,255,255,0.1)';
+      } else {
+        btn2.style.background = 'linear-gradient(90deg,var(--accent-start),var(--accent-end))';
+        btn2.style.border = 'none';
+        btn1.style.background = 'transparent';
+        btn1.style.border = '1px solid rgba(255,255,255,0.1)';
+      }
+      
+      cargarTareas();
+      items = Array.from(grid.querySelectorAll('article'));
+    }
+
     const visor = document.getElementById('visor');
     const visorTitulo = document.getElementById('visorTitulo');
     const visorContenido = document.getElementById('visorContenido');
@@ -420,106 +524,101 @@
     async function abrirVisor(i) {
       const t = tareas[i];
       visorTitulo.textContent = t.titulo;
-      visorContenido.innerHTML = '';
-
-      if (t.tipo === 'pdf') {
-        const iframe = document.createElement('iframe');
-        iframe.src = 'https://docs.google.com/gview?url=' + encodeURIComponent(t.archivo) + '&embedded=true';
-        iframe.className = 'w-full h-full rounded-lg';
-        visorContenido.appendChild(iframe);
-      } else if (t.tipo === 'py') {
-        const pre = document.createElement('pre');
-        pre.textContent = 'Cargando código...';
-        visorContenido.appendChild(pre);
-        try {
-          const res = await fetch(t.archivo);
-          const txt = await res.text();
-          pre.textContent = txt;
-        } catch {
-          pre.textContent = '⚠️ No se pudo cargar el archivo.';
-        }
-      }
-
-      visor.classList.remove('hidden');
+visorContenido.innerHTML = '';
+  if (t.tipo === 'pdf') {
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://docs.google.com/gview?url=' + encodeURIComponent(t.archivo) + '&embedded=true';
+    iframe.className = 'w-full h-full rounded-lg';
+    visorContenido.appendChild(iframe);
+  } else if (t.tipo === 'py') {
+    const pre = document.createElement('pre');
+    pre.textContent = 'Cargando código...';
+    visorContenido.appendChild(pre);
+    try {
+      const res = await fetch(t.archivo);
+      const txt = await res.text();
+      pre.textContent = txt;
+    } catch {
+      pre.textContent = '⚠️ No se pudo cargar el archivo.';
     }
+  }
 
-    function cerrarVisor() {
-      visor.classList.add('hidden');
-      visorContenido.innerHTML = '';
+  visor.classList.remove('hidden');
+}
+
+function cerrarVisor() {
+  visor.classList.add('hidden');
+  visorContenido.innerHTML = '';
+}
+
+document.querySelectorAll('.enter').forEach((el, i) => {
+  setTimeout(() => el.classList.add('visible'), 80 * i);
+});
+
+const themeBtn = document.getElementById('themeBtn');
+const themeIcon = document.getElementById('themeIcon');
+let dark = true;
+
+themeBtn.addEventListener('click', () => {
+  dark = !dark;
+  if(!dark){
+    document.body.style.background = "linear-gradient(180deg,#f7fbff,#eef6ff)";
+    document.body.style.color = "#0b1220";
+    document.querySelectorAll('.card').forEach(c => {
+      c.style.background = "linear-gradient(180deg, rgba(250,250,250,0.9), rgba(250,250,250,0.88))";
+      c.style.border = "1px solid rgba(2,6,23,0.04)";
+      c.style.color = "#0b1220";
+    });
+    themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8-9h1M3 12H2m15.364-6.364l.707.707M6.343 17.657l-.707.707M17.657 17.657l.707-.707M6.343 6.343l-.707-.707" />';
+  } else {
+    document.body.style.background = "";
+    document.body.style.color = "";
+    document.querySelectorAll('.card').forEach(c => {
+      c.style.background = "";
+      c.style.border = "";
+      c.style.color = "";
+    });
+    themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />';
+  }
+});
+
+const search = document.getElementById('search');
+const filter = document.getElementById('filter');
+let items = [];
+
+function applyFilters(){
+  const q = (search.value || '').toLowerCase().trim();
+  const f = filter.value;
+
+  items.forEach(it => {
+    const title = it.querySelector('h3').textContent.toLowerCase();
+    const txt = it.querySelector('p').textContent.toLowerCase();
+    const type = it.getAttribute('data-type') || 'all';
+
+    const matchesFilter = (f === 'all') ? true : (type === f);
+    const matchesQuery = (q === '') ? true : (title.includes(q) || txt.includes(q));
+
+    if(matchesFilter && matchesQuery){
+      it.style.display = '';
+      it.classList.add('visible');
+    } else {
+      it.style.display = 'none';
     }
+  });
+}
 
-    // Entrada animada
-    document.querySelectorAll('.enter').forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), 80 * i);
-    });
+search.addEventListener('input', applyFilters);
+filter.addEventListener('change', applyFilters);
 
-    // THEME TOGGLE
-    const themeBtn = document.getElementById('themeBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    let dark = true;
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  alert('Gracias — mensaje preparado. (Este formulario no envía sin backend.)');
+  e.target.reset();
+});
 
-    themeBtn.addEventListener('click', () => {
-      dark = !dark;
-      if(!dark){
-        document.body.style.background = "linear-gradient(180deg,#f7fbff,#eef6ff)";
-        document.body.style.color = "#0b1220";
-        document.querySelectorAll('.card').forEach(c => {
-          c.style.background = "linear-gradient(180deg, rgba(250,250,250,0.9), rgba(250,250,250,0.88))";
-          c.style.border = "1px solid rgba(2,6,23,0.04)";
-          c.style.color = "#0b1220";
-        });
-        themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8-9h1M3 12H2m15.364-6.364l.707.707M6.343 17.657l-.707.707M17.657 17.657l.707-.707M6.343 6.343l-.707-.707" />';
-      } else {
-        document.body.style.background = "";
-        document.body.style.color = "";
-        document.querySelectorAll('.card').forEach(c => {
-          c.style.background = "";
-          c.style.border = "";
-          c.style.color = "";
-        });
-        themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />';
-      }
-    });
-
-    // SEARCH + FILTER
-    const search = document.getElementById('search');
-    const filter = document.getElementById('filter');
-    let items = [];
-
-    function applyFilters(){
-      const q = (search.value || '').toLowerCase().trim();
-      const f = filter.value;
-
-      items.forEach(it => {
-        const title = it.querySelector('h3').textContent.toLowerCase();
-        const txt = it.querySelector('p').textContent.toLowerCase();
-        const type = it.getAttribute('data-type') || 'all';
-
-        const matchesFilter = (f === 'all') ? true : (type === f);
-        const matchesQuery = (q === '') ? true : (title.includes(q) || txt.includes(q));
-
-        if(matchesFilter && matchesQuery){
-          it.style.display = '';
-          it.classList.add('visible');
-        } else {
-          it.style.display = 'none';
-        }
-      });
-    }
-
-    search.addEventListener('input', applyFilters);
-    filter.addEventListener('change', applyFilters);
-
-    // Contact form
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Gracias — mensaje preparado. (Este formulario no envía sin backend.)');
-      e.target.reset();
-    });
-
-    // Inicializar
-    cargarTareas();
-    items = Array.from(grid.querySelectorAll('article'));
+cargarTareas();
+items = Array.from(grid.querySelectorAll('article'));
   </script>
 </body>
 </html>
+```
